@@ -1,0 +1,67 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "styles_alt.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "covers/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "covers_medium/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "og.png",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "fav.jpeg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "test.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/styles_alt.css",
+      "dest": "styles_alt.css"
+    },
+    {
+      "src": "/covers/(.*)",
+      "dest": "covers/$1"
+    },
+    {
+      "src": "/covers_medium/(.*)",
+      "dest": "covers_medium/$1"
+    },
+    {
+      "src": "/og.png",
+      "dest": "og.png"
+    },
+    {
+      "src": "/fav.jpeg",
+      "dest": "fav.jpeg"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "fav.jpeg"
+    },
+    {
+      "src": "/test.html",
+      "dest": "test.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "index.html"
+    }
+  ]
+}

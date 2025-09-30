@@ -1,0 +1,232 @@
+/* Стили для архива обложек журнала Афиша в стиле Notion */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Grato Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #37352f;
+    background-color: #ffffff;
+    font-size: 16px;
+}
+
+/* Шапка в стиле Notion */
+header {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    color: #ffffff;
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+header h1 {
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    font-weight: 400;
+    color: #e9ecef;
+}
+
+/* Основной контент в стиле Notion */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* Разделы по годам в стиле Notion */
+.year-section {
+    margin-bottom: 4rem;
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.year-title {
+    background: #f7f8fa;
+    color: #37352f;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 1.5rem 2rem;
+    margin: 0;
+    border-bottom: 1px solid #e9ecef;
+    letter-spacing: -0.01em;
+}
+
+/* Сетка обложек в стиле Notion */
+.covers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+/* Элемент обложки в стиле Notion */
+.cover-item {
+    background: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.cover-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: #d1d5db;
+}
+
+/* Изображение обложки в стиле Notion */
+.cover-image {
+    position: relative;
+    overflow: hidden;
+    background: #fafbfc;
+}
+
+.cover-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 380px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.cover-item:hover .cover-image img {
+    transform: scale(1.01);
+}
+
+/* Информация об обложке в стиле Notion */
+.cover-info {
+    padding: 1.25rem;
+    text-align: center;
+    background: #ffffff;
+}
+
+.cover-number {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #37352f;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+}
+
+.cover-date {
+    font-size: 0.9rem;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+/* Подвал в стиле Notion */
+footer {
+    text-align: center;
+    padding: 2.5rem;
+    color: #6b7280;
+    background: #f9fafb;
+    margin-top: 4rem;
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+}
+
+/* Адаптивность в стиле Notion */
+@media (max-width: 768px) {
+    header {
+        padding: 2.5rem 1.5rem 2rem;
+    }
+
+    header h1 {
+        font-size: 2.2rem;
+    }
+
+    main {
+        padding: 2rem 1rem;
+    }
+
+    .covers-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.25rem;
+        padding: 1.5rem;
+    }
+
+    .year-title {
+        font-size: 1.4rem;
+        padding: 1.25rem 1.5rem;
+    }
+
+    .year-section {
+        margin-bottom: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .covers-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .cover-info {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .year-title {
+        font-size: 1.2rem;
+    }
+}
+
+/* Дополнительные стили в стиле Notion */
+.cover-image img {
+    background: #fafbfc;
+}
+
+/* Анимация появления в стиле Notion */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cover-item {
+    animation: fadeInUp 0.4s ease forwards;
+}
+
+/* Стиль для лучшей читаемости */
+.year-section:first-child {
+    margin-top: 0;
+}
+
+.year-title:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* Hover эффекты в стиле Notion */
+.cover-item {
+    cursor: pointer;
+}
+
+.cover-item:hover .cover-info {
+    background: #fefefe;
+}
