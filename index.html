@@ -4163,6 +4163,55 @@ window.onclick = (event) => {
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closePdfModal();
 });
+
+// Hover preview для полноразмерных изображений
+(function() {
+    // Создаём элемент для preview
+    const preview = document.createElement('div');
+    preview.className = 'image-preview';
+    preview.innerHTML = '<img src="" alt="Preview">';
+    document.body.appendChild(preview);
+    
+    const previewImg = preview.querySelector('img');
+    
+    // Добавляем обработчики hover для всех изображений обложек
+    document.querySelectorAll('.cover-image img').forEach(img => {
+        const coverImage = img.closest('.cover-image');
+        
+        coverImage.addEventListener('mouseenter', function(e) {
+            // Получаем путь к полноразмерному изображению (заменяем covers_medium на covers)
+            const fullSizeSrc = img.src.replace('/covers_medium/', '/covers/');
+            previewImg.src = fullSizeSrc;
+            preview.classList.add('active');
+        });
+        
+        coverImage.addEventListener('mousemove', function(e) {
+            // Позиционируем preview рядом с курсором
+            const offsetX = 20;
+            const offsetY = 20;
+            
+            let left = e.clientX + offsetX;
+            let top = e.clientY + offsetY;
+            
+            // Проверяем, не выходит ли preview за границы экрана справа
+            if (left + previewImg.offsetWidth > window.innerWidth) {
+                left = e.clientX - previewImg.offsetWidth - offsetX;
+            }
+            
+            // Проверяем, не выходит ли preview за границы экрана снизу
+            if (top + previewImg.offsetHeight > window.innerHeight) {
+                top = e.clientY - previewImg.offsetHeight - offsetY;
+            }
+            
+            preview.style.left = left + 'px';
+            preview.style.top = top + 'px';
+        });
+        
+        coverImage.addEventListener('mouseleave', function() {
+            preview.classList.remove('active');
+        });
+    });
+})();
 </script>
 <footer>
     <p>Данные взяты из Google Sheets таблицы</p>

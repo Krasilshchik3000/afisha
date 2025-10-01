@@ -89,6 +89,32 @@ footer {
     margin-top: 40px;
 }
 
+/* Hover preview для полноразмерных изображений */
+.image-preview {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.image-preview.active {
+    opacity: 1;
+}
+
+.image-preview img {
+    max-width: 90vw;
+    max-height: 90vh;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    border: 2px solid #444;
+}
+
+.cover-image {
+    position: relative;
+    cursor: pointer;
+}
+
 @media (max-width: 600px) {
     .covers-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -105,5 +131,11 @@ footer {
 
     .year-title {
         font-size: 20px;
+    }
+    
+    /* На мобильных устройствах делаем preview меньше */
+    .image-preview img {
+        max-width: 95vw;
+        max-height: 80vh;
     }
 }
