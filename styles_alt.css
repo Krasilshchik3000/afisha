@@ -103,11 +103,14 @@ footer {
 }
 
 .image-preview img {
-    max-width: 90vw;
-    max-height: 90vh;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
     border-radius: 4px;
     border: 2px solid #444;
+    object-fit: contain;
 }
 
 .cover-image {
@@ -133,7 +136,7 @@ footer {
         font-size: 20px;
     }
     
-    /* На мобильных устройствах делаем preview меньше */
+    /* На мобильных устройствах ограничиваем размер preview */
     .image-preview img {
         max-width: 95vw;
         max-height: 80vh;
