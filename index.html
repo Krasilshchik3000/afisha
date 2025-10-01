@@ -4189,17 +4189,32 @@ document.addEventListener('keydown', (event) => {
             const offsetX = 20;
             const offsetY = 20;
             
+            // Получаем размеры preview после загрузки изображения
+            const previewRect = preview.getBoundingClientRect();
+            const previewWidth = previewRect.width || 0;
+            const previewHeight = previewRect.height || 0;
+            
             let left = e.clientX + offsetX;
             let top = e.clientY + offsetY;
             
             // Проверяем, не выходит ли preview за границы экрана справа
-            if (left + previewImg.offsetWidth > window.innerWidth) {
-                left = e.clientX - previewImg.offsetWidth - offsetX;
+            if (left + previewWidth > window.innerWidth) {
+                left = e.clientX - previewWidth - offsetX;
+            }
+            
+            // Проверяем, не выходит ли preview за границы экрана слева
+            if (left < 0) {
+                left = 10;
             }
             
             // Проверяем, не выходит ли preview за границы экрана снизу
-            if (top + previewImg.offsetHeight > window.innerHeight) {
-                top = e.clientY - previewImg.offsetHeight - offsetY;
+            if (top + previewHeight > window.innerHeight) {
+                top = e.clientY - previewHeight - offsetY;
+            }
+            
+            // Проверяем, не выходит ли preview за границы экрана сверху
+            if (top < 0) {
+                top = 10;
             }
             
             preview.style.left = left + 'px';
