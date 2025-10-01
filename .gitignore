@@ -1,0 +1,8 @@
+.vercel
+
+# Исключаем папку covers_big из деплоя на GitHub (оставляем локально)
+covers_big/
+
+# Системные файлы macOS
+.DS_Store
+
