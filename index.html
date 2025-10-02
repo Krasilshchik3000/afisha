@@ -43,9 +43,29 @@
 </head>
 <body>
 <header>
-    <img src="fav.jpeg" alt="Логотип Афиши" class="logo">
-    <div class="header-text">
-        <strong>357 обложек «Афиши»</strong> Если нажать, откроется pdf всего номера
+    <div class="header-content">
+        <img src="fav.jpeg" alt="Логотип Афиши" class="logo">
+        <div class="header-text">
+            <strong>357 обложек «Афиши»</strong> Если нажать, откроется pdf всего номера
+        </div>
+    </div>
+    <div class="music-player">
+        <button id="toggleMusic" class="music-toggle">
+            <img src="Afisha Hold Music/ahm.jpg" alt="Afisha Hold Music" class="music-cover">
+            <span class="music-text">Включить Afisha Hold Music</span>
+        </button>
+        <div id="musicControls" class="music-controls" style="display: none;">
+            <button id="prevTrack" class="music-btn">⏮</button>
+            <button id="playPause" class="music-btn">▶</button>
+            <button id="nextTrack" class="music-btn">⏭</button>
+            <div class="track-info">
+                <span id="currentTrack">Выберите трек</span>
+            </div>
+        </div>
+    </div>
+    <!-- Анимированный диск -->
+    <div id="discPlayer" class="disc-player">
+        <img src="Afisha Hold Music/disc.png" alt="Disc" class="disc-image">
     </div>
 </header>
 <main>
@@ -4225,6 +4245,164 @@ document.addEventListener('keydown', (event) => {
             preview.classList.remove('active');
         });
     });
+})();
+
+// Музыкальный плеер
+(function() {
+    const audio = new Audio();
+    let currentTrackIndex = 0;
+    let isPlaying = false;
+    let playlist = [];
+    let currentRotation = 0; // Отслеживаем текущий угол поворота диска
+    
+    // Список треков
+    const trackList = [
+        '01 Francoise Hardy-Comment Te Dire Adieu.mp3',
+        '02 Jeanette - Le Temps De Mon Pere.mp3',
+        '03 Nino Ferrer - Madame Robert.mp3',
+        '04 Dori Ghezzi - Casatschok.mp3',
+        '05 Claudine Longet - Como La Luna.mp3',
+        '06 Lolita - Calamita.mp3',
+        '07 The Fevers - Onde Estao Teus Olhos Negros.mp3',
+        '08 Penny Lee & The Silverstones - Kung See Kung See Let\'s Be Happy.mp3',
+        '09 Marie Laforet - Ivan, Boris Et Moi.mp3',
+        '10 Henry Buzz - The Rain Is Falling.mp3',
+        '11 Robert Mitchum - Jean And Dina.mp3',
+        '12 Eileen - Ces Bottes Sont Faites Pour Marcher.mp3',
+        '13 Naomi & The Boys - Bad Loser.mp3',
+        '14 Gianni Morandi - Il Giocattolo.mp3',
+        '15 Los Belkings - Okinawa.mp3',
+        '16 Lone Star - La PlaYA.mp3',
+        '17 Sergio Murilo E Snakes - Tu Seras.mp3',
+        '18 Patty Pravo - La Bambola.mp3',
+        '19 Leanette - Pourque Te Vas.mp3',
+        '20 Caterina Caselli - Il Carnevale.mp3',
+        '21 Francoise Hardy - Le Temps Da L\'amour.mp3',
+        '22 The Hormonauts- Hatuey.mp3',
+        '23 Lulu - The Man Who Sold The World.mp3',
+        '24 The Tempters - Stop The Music.mp3'
+    ];
+    
+    // Элементы интерфейса
+    const toggleMusicBtn = document.getElementById('toggleMusic');
+    const musicControls = document.getElementById('musicControls');
+    const playPauseBtn = document.getElementById('playPause');
+    const prevTrackBtn = document.getElementById('prevTrack');
+    const nextTrackBtn = document.getElementById('nextTrack');
+    const currentTrackSpan = document.getElementById('currentTrack');
+    
+    // Элементы диска
+    const discPlayer = document.getElementById('discPlayer');
+    const discImage = document.querySelector('.disc-image');
+    
+    // Обработчики событий
+    toggleMusicBtn.addEventListener('click', toggleMusicPlayer);
+    playPauseBtn.addEventListener('click', togglePlayPause);
+    prevTrackBtn.addEventListener('click', playPreviousTrack);
+    nextTrackBtn.addEventListener('click', playNextTrack);
+    
+    // Обработчики аудио
+    audio.addEventListener('ended', playNextTrack);
+    
+    function toggleMusicPlayer() {
+        if (musicControls.style.display === 'none') {
+            musicControls.style.display = 'flex';
+            toggleMusicBtn.querySelector('.music-text').textContent = 'Скрыть плеер';
+            discPlayer.classList.add('visible');
+            loadTrack(0);
+            // Автоматически запускаем воспроизведение
+            setTimeout(() => {
+                audio.play();
+                playPauseBtn.textContent = '⏸';
+                startDisc();
+                isPlaying = true;
+            }, 100);
+        } else {
+            musicControls.style.display = 'none';
+            toggleMusicBtn.querySelector('.music-text').textContent = 'Включить Afisha Hold Music';
+            discPlayer.classList.remove('visible');
+            stopDisc();
+            audio.pause();
+            isPlaying = false;
+            playPauseBtn.textContent = '▶';
+        }
+    }
+    
+    function loadTrack(index) {
+        if (index >= 0 && index < trackList.length) {
+            currentTrackIndex = index;
+            const trackName = trackList[index].replace(/^\d+\s+/, '').replace(/\.mp3$/, '');
+            audio.src = `Afisha Hold Music/${trackList[index]}`;
+            currentTrackSpan.textContent = trackName;
+        }
+    }
+    
+    function togglePlayPause() {
+        if (isPlaying) {
+            audio.pause();
+            playPauseBtn.textContent = '▶';
+            stopDisc();
+            isPlaying = false;
+        } else {
+            audio.play();
+            playPauseBtn.textContent = '⏸';
+            startDisc();
+            isPlaying = true;
+        }
+    }
+    
+    function startDisc() {
+        // Запоминаем текущий угол и начинаем крутить с него
+        const currentAngle = getCurrentDiscAngle();
+        discImage.style.transform = `rotate(${currentAngle}deg)`;
+        discImage.classList.add('spinning');
+        currentRotation = currentAngle;
+    }
+    
+    function stopDisc() {
+        // Сохраняем текущий угол поворота
+        const currentAngle = getCurrentDiscAngle();
+        discImage.classList.remove('spinning');
+        discImage.style.transform = `rotate(${currentAngle}deg)`;
+        currentRotation = currentAngle;
+    }
+    
+    function getCurrentDiscAngle() {
+        const computedStyle = window.getComputedStyle(discImage);
+        const transform = computedStyle.transform;
+        
+        if (transform === 'none' || !transform.includes('matrix')) {
+            return currentRotation;
+        }
+        
+        // Парсим matrix для получения текущего поворота
+        const values = transform.match(/matrix\(([^)]+)\)/);
+        if (values) {
+            const matrix = values[1].split(',').map(parseFloat);
+            const angle = Math.atan2(matrix[1], matrix[0]) * (180 / Math.PI);
+            return angle < 0 ? angle + 360 : angle;
+        }
+        
+        return currentRotation;
+    }
+    
+    function playPreviousTrack() {
+        const newIndex = currentTrackIndex > 0 ? currentTrackIndex - 1 : trackList.length - 1;
+        loadTrack(newIndex);
+        if (isPlaying) {
+            audio.play();
+            startDisc();
+        }
+    }
+    
+    function playNextTrack() {
+        const newIndex = currentTrackIndex < trackList.length - 1 ? currentTrackIndex + 1 : 0;
+        loadTrack(newIndex);
+        if (isPlaying) {
+            audio.play();
+            startDisc();
+        }
+    }
 })();
 </script>
 <footer>
