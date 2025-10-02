@@ -30,7 +30,7 @@
       "use": "@vercel/static"
     },
     {
-      "src": "Afisha Hold Music/**",
+      "src": "music/**",
       "use": "@vercel/static"
     }
   ],
@@ -64,8 +64,8 @@
       "dest": "test.html"
     },
     {
-      "src": "/Afisha Hold Music/(.*)",
-      "dest": "Afisha Hold Music/$1"
+      "src": "/music/(.*)",
+      "dest": "music/$1"
     },
     {
       "src": "/(.*)",

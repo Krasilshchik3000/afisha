@@ -51,7 +51,7 @@
     </div>
     <div class="music-player">
         <button id="toggleMusic" class="music-toggle">
-            <img src="Afisha Hold Music/ahm.jpg" alt="Afisha Hold Music" class="music-cover">
+            <img src="music/ahm.jpg" alt="Afisha Hold Music" class="music-cover">
             <span class="music-text">Включить Afisha Hold Music</span>
         </button>
         <div id="musicControls" class="music-controls" style="display: none;">
@@ -65,7 +65,7 @@
     </div>
     <!-- Анимированный диск -->
     <div id="discPlayer" class="disc-player">
-        <img src="Afisha Hold Music/disc.png" alt="Disc" class="disc-image">
+        <img src="music/disc.png" alt="Disc" class="disc-image">
     </div>
 </header>
 <main>
@@ -4332,7 +4332,7 @@ document.addEventListener('keydown', (event) => {
         if (index >= 0 && index < trackList.length) {
             currentTrackIndex = index;
             const trackName = trackList[index].replace(/^\d+\s+/, '').replace(/\.mp3$/, '');
-            audio.src = `Afisha Hold Music/${trackList[index]}`;
+            audio.src = `music/${trackList[index]}`;
             currentTrackSpan.textContent = trackName;
         }
     }
