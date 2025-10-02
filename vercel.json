@@ -28,6 +28,10 @@
     {
       "src": "test.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "Afisha Hold Music/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -58,6 +62,10 @@
     {
       "src": "/test.html",
       "dest": "test.html"
+    },
+    {
+      "src": "/Afisha Hold Music/(.*)",
+      "dest": "Afisha Hold Music/$1"
     },
     {
       "src": "/(.*)",
