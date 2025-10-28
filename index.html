@@ -4869,6 +4869,13 @@ document.addEventListener('DOMContentLoaded', function() {
         let preview = null;
         let hoverTimeout = null;
         
+        function hidePreview() {
+            clearTimeout(hoverTimeout);
+            if (preview) {
+                preview.style.display = 'none';
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             const covers = document.querySelectorAll('.cover-thumbnail');
             
@@ -4883,6 +4890,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         preview = document.createElement('img');
                         preview.className = 'hover-preview';
                         document.body.appendChild(preview);
+                        
+                        // Закрываем preview при клике на него или при скролле
+                        preview.addEventListener('click', hidePreview);
+                        window.addEventListener('scroll', hidePreview, true);
+                        window.addEventListener('touchmove', hidePreview, true);
                     }
                     
                     preview.src = fullSrc;
@@ -4903,6 +4915,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (preview) {
                         preview.style.display = 'none';
                     }
+                });
+                
+                // Для touch-устройств: закрываем при уходе с картинки
+                cover.addEventListener('touchend', function() {
+                    setTimeout(hidePreview, 500);
                 });
             });
         });
